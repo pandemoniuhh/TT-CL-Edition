@@ -242,6 +242,15 @@ def loadModels():
             model = loader.loadModel('phase_3' + fileRoot + '250').node()
             Preloaded.append(model)
 
+        for key in HeadDictTTO.keys():
+            fileRoot = HeadDictTTO[key]
+            model = loader.loadModel('phase_3' + fileRoot + '1000').node()
+            Preloaded.append(model)
+            model = loader.loadModel('phase_3' + fileRoot + '500').node()
+            Preloaded.append(model)
+            model = loader.loadModel('phase_3' + fileRoot + '250').node()
+            Preloaded.append(model)
+
 
 def loadBasicAnims():
     loadPhaseAnims()
@@ -345,6 +354,15 @@ def loadPhaseAnims(phaseStr = 'phase_3', loadFlag = 1):
                     if base.localAvatar.style.head == key:
                         base.localAvatar.unloadAnims([anim[0]], 'head', None)
 
+    for key in HeadDictTTO.keys():
+        if string.find(key, 'd') >= 0:
+            for anim in animList:
+                if loadFlag:
+                    pass
+                elif anim[0] in HeadAnimDict[key]:
+                    if base.localAvatar.style.head == key:
+                        base.localAvatar.unloadAnims([anim[0]], 'head', None)
+
     return
 
 
@@ -388,6 +406,15 @@ def compileGlobalAnimList():
                 #   busy HACKING rn sorry mom
                 #   file = phaseStr + HeadDict[key] + anim[1]
                     file = phaseStr + DogAnimDict[key] + anim[1]
+                    HeadAnimDict[key][anim[0]] = file
+
+        for key in HeadDictTTO.keys():
+            if string.find(key, 'd') >= 0:
+                HeadAnimDict.setdefault(key, {})
+                for anim in animList:
+                #   busy HACKING rn sorry mom
+                #   file = phaseStr + HeadDict[key] + anim[1]
+                    file = phaseStr + DogAnimDictTTO[key] + anim[1]
                     HeadAnimDict[key][anim[0]] = file
 
 

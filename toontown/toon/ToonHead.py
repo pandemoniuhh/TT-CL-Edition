@@ -15,6 +15,11 @@ DogAnimDict = {'dls': '/models/char/tt_a_chr_dgm_shorts_head_',
      'dss': '/models/char/tt_a_chr_dgm_skirt_head_',
      'dsl': '/models/char/tt_a_chr_dgs_shorts_head_',
      'dll': '/models/char/tt_a_chr_dgl_shorts_head_'}
+     
+DogAnimDictTTO = {'dlsr': '/models/char/tt_a_chr_dgm_shorts_head_',
+     'dssr': '/models/char/tt_a_chr_dgm_skirt_head_',
+     'dslr': '/models/char/tt_a_chr_dgs_shorts_head_',
+     'dllr': '/models/char/tt_a_chr_dgl_shorts_head_'}
 
 if not base.config.GetBool('want-new-anims', 1):
     HeadDict = {'dls': '/models/char/dogMM_Shorts-head-',
@@ -140,25 +145,57 @@ else:
      'j': '/models/char/kangaroo-lashes',
      'k': '/models/char/kiwi-lashes',
      'l': '/models/char/armadillo-lashes'
-        }
+    }
+    HeadDictTTO = {'dlsr': '/models/char/legacy/tt_a_chr_dgm_shorts_head_',
+     'dssr': '/models/char/legacy/tt_a_chr_dgm_skirt_head_',
+     'dslr': '/models/char/legacy/tt_a_chr_dgs_shorts_head_',
+     'dllr': '/models/char/legacy/tt_a_chr_dgl_shorts_head_',
+     'c': '/models/char/legacy/cat-heads-',
+     'h': '/models/char/legacy/horse-heads-',
+     'm': '/models/char/legacy/mouse-heads-',
+     'r': '/models/char/legacy/rabbit-heads-',
+     'f': '/models/char/legacy/duck-heads-',
+     'p': '/models/char/legacy/monkey-heads-',
+     'b': '/models/char/legacy/bear-heads-',
+     's': '/models/char/legacy/pig-heads-',
+    }
+    EyelashDictTTO = {'d': '/models/char/legacy/dog-lashes',
+     'c': '/models/char/legacy/cat-lashes',
+     'h': '/models/char/legacy/horse-lashes',
+     'm': '/models/char/legacy/mouse-lashes',
+     'r': '/models/char/legacy/rabbit-lashes',
+     'f': '/models/char/legacy/duck-lashes',
+     'p': '/models/char/legacy/monkey-lashes',
+     'b': '/models/char/legacy/bear-lashes',
+     's': '/models/char/legacy/pig-lashes',
+    }      
+    
 
 DogMuzzleDict = {'dls': '/models/char/dogMM_Shorts-headMuzzles-',
  'dss': '/models/char/dogMM_Skirt-headMuzzles-',
  'dsl': '/models/char/dogSS_Shorts-headMuzzles-',
  'dll': '/models/char/dogLL_Shorts-headMuzzles-'}
+ 
+DogMuzzleDictTTO = {'dlsr': '/models/char/legacy/dogMM_Shorts-headMuzzles-',
+ 'dssr': '/models/char/legacy/dogMM_Skirt-headMuzzles-',
+ 'dslr': '/models/char/legacy/dogSS_Shorts-headMuzzles-',
+ 'dllr': '/models/char/legacy/dogLL_Shorts-headMuzzles-'}  
 
 #tti preloader
 PreloadHeads = {}
+PreloadHeadsTTO = {}
 
 def preloadToonHeads():
     global PreloadHeads
     if not PreloadHeads:
         print ('Preloading Toon heads...')
+    global PreloadHeadsTTO
+    if not PreloadHeadsTTO:
+        print ('Preloading TTO Toon heads...')
 
         def preload(task):
             for key in HeadDict.keys():
                 fileRoot = HeadDict[key]
-
                 PreloadHeads['phase_3' + fileRoot + '1000'] = loader.loadModel('phase_3' + fileRoot + '1000')
                 PreloadHeads['phase_3' + fileRoot + '1000'].flattenMedium()
 
@@ -167,6 +204,17 @@ def preloadToonHeads():
 
                 PreloadHeads['phase_3' + fileRoot + '250'] = loader.loadModel('phase_3' + fileRoot + '250')
                 PreloadHeads['phase_3' + fileRoot + '250'].flattenMedium()
+                
+            for key in HeadDictTTO.keys():
+                fileRoot = HeadDictTTO[key]
+                PreloadHeadsTTO['phase_3' + fileRoot + '1000'] = loader.loadModel('phase_3' + fileRoot + '1000')
+                PreloadHeadsTTO['phase_3' + fileRoot + '1000'].flattenMedium()
+
+                PreloadHeadsTTO['phase_3' + fileRoot + '500'] = loader.loadModel('phase_3' + fileRoot + '500')
+                PreloadHeadsTTO['phase_3' + fileRoot + '500'].flattenMedium()
+
+                PreloadHeadsTTO['phase_3' + fileRoot + '250'] = loader.loadModel('phase_3' + fileRoot + '250')
+                PreloadHeadsTTO['phase_3' + fileRoot + '250'].flattenMedium()
 
             return task.done
 
@@ -350,8 +398,12 @@ class ToonHead(Actor.Actor):
 
     def generateToonHead(self, copy, style, lods, forGui = 0):
         global PreloadHeads
+        global PreloadHeadsTTO
         headStyle = style.head
         fix = None
+        print("PEANUT")
+        print(style)
+        print("PEANUT")
         if headStyle == 'dls':
             filePrefix = HeadDict['dls']
             headHeight = 0.75
@@ -364,6 +416,19 @@ class ToonHead(Actor.Actor):
         elif headStyle == 'dll':
             filePrefix = HeadDict['dll']
             headHeight = 0.75
+        elif headStyle == 'dlsr':
+            filePrefix = HeadDictTTO['dlsr']
+            headHeight = 0.75
+        elif headStyle == 'dssr':
+            filePrefix = HeadDictTTO['dssr']
+            headHeight = 0.5
+        elif headStyle == 'dslr':
+            filePrefix = HeadDictTTO['dslr']
+            headHeight = 0.5
+        elif headStyle == 'dllr':
+            filePrefix = HeadDictTTO['dllr']
+            headHeight = 0.75
+            
         elif headStyle == 'cls':
             filePrefix = HeadDict['c']
             fix = self.__fixHeadLongShort
@@ -380,6 +445,23 @@ class ToonHead(Actor.Actor):
             filePrefix = HeadDict['c']
             fix = self.__fixHeadLongLong
             headHeight = 0.75
+        elif headStyle == 'clsr':
+            filePrefix = HeadDictTTO['c']
+            fix = self.__fixHeadLongShort
+            headHeight = 0.75
+        elif headStyle == 'cssr':
+            filePrefix = HeadDictTTO['c']
+            fix = self.__fixHeadShortShort
+            headHeight = 0.5
+        elif headStyle == 'cslr':
+            filePrefix = HeadDictTTO['c']
+            fix = self.__fixHeadShortLong
+            headHeight = 0.5
+        elif headStyle == 'cllr':
+            filePrefix = HeadDictTTO['c']
+            fix = self.__fixHeadLongLong
+            headHeight = 0.75
+            
         elif headStyle == 'hls':
             filePrefix = HeadDict['h']
             fix = self.__fixHeadLongShort
@@ -396,6 +478,23 @@ class ToonHead(Actor.Actor):
             filePrefix = HeadDict['h']
             fix = self.__fixHeadLongLong
             headHeight = 0.75
+        elif headStyle == 'hlsr':
+            filePrefix = HeadDictTTO['h']
+            fix = self.__fixHeadLongShort
+            headHeight = 0.75
+        elif headStyle == 'hssr':
+            filePrefix = HeadDictTTO['h']
+            fix = self.__fixHeadShortShort
+            headHeight = 0.5
+        elif headStyle == 'hslr':
+            filePrefix = HeadDictTTO['h']
+            fix = self.__fixHeadShortLong
+            headHeight = 0.5
+        elif headStyle == 'hllr':
+            filePrefix = HeadDictTTO['h']
+            fix = self.__fixHeadLongLong
+            headHeight = 0.75
+            
         elif headStyle == 'mls':
             filePrefix = HeadDict['m']
             fix = self.__fixHeadLongShort
@@ -420,6 +519,31 @@ class ToonHead(Actor.Actor):
                 # TTO Mouse model fix
                 fix = self.__fixHeadLongShort
             headHeight = 0.5
+        elif headStyle == 'mlsr':
+            filePrefix = HeadDictTTO['m']
+            fix = self.__fixHeadLongShort
+            headHeight = 0.75
+        elif headStyle == 'mssr':
+            filePrefix = HeadDictTTO['m']
+            fix = self.__fixHeadShortShort
+            headHeight = 0.5
+        elif (headStyle == 'mslr'):
+            # mouse, short head, long muzzle
+            filePrefix = HeadDictTTO['m']
+            fix = self.__fixHeadShortLong
+            if base.config.GetBool('want-legacy-heads', 1):
+                # TTO Mouse model fix
+                fix = self.__fixHeadShortShort
+            headHeight = 0.75
+        elif (headStyle == 'mllr'):
+            # mouse, long head, long muzzle
+            filePrefix = HeadDictTTO['m']
+            fix = self.__fixHeadLongLong
+            if base.config.GetBool('want-legacy-heads', 1):
+                # TTO Mouse model fix
+                fix = self.__fixHeadLongShort
+            headHeight = 0.5
+            
         elif headStyle == 'rls':
             filePrefix = HeadDict['r']
             fix = self.__fixHeadLongShort
@@ -436,6 +560,23 @@ class ToonHead(Actor.Actor):
             filePrefix = HeadDict['r']
             fix = self.__fixHeadLongLong
             headHeight = 0.75
+        elif headStyle == 'rlsr':
+            filePrefix = HeadDictTTO['r']
+            fix = self.__fixHeadLongShort
+            headHeight = 0.75
+        elif headStyle == 'rssr':
+            filePrefix = HeadDictTTO['r']
+            fix = self.__fixHeadShortShort
+            headHeight = 0.5
+        elif headStyle == 'rslr':
+            filePrefix = HeadDictTTO['r']
+            fix = self.__fixHeadShortLong
+            headHeight = 0.5
+        elif headStyle == 'rllr':
+            filePrefix = HeadDictTTO['r']
+            fix = self.__fixHeadLongLong
+            headHeight = 0.75
+            
         elif headStyle == 'fls':
             filePrefix = HeadDict['f']
             fix = self.__fixHeadLongShort
@@ -452,6 +593,23 @@ class ToonHead(Actor.Actor):
             filePrefix = HeadDict['f']
             fix = self.__fixHeadLongLong
             headHeight = 0.75
+        elif headStyle == 'flsr':
+            filePrefix = HeadDictTTO['f']
+            fix = self.__fixHeadLongShort
+            headHeight = 0.75
+        elif headStyle == 'fssr':
+            filePrefix = HeadDictTTO['f']
+            fix = self.__fixHeadShortShort
+            headHeight = 0.5
+        elif headStyle == 'fslr':
+            filePrefix = HeadDictTTO['f']
+            fix = self.__fixHeadShortLong
+            headHeight = 0.5
+        elif headStyle == 'fllr':
+            filePrefix = HeadDictTTO['f']
+            fix = self.__fixHeadLongLong
+            headHeight = 0.75
+            
         elif headStyle == 'pls':
             filePrefix = HeadDict['p']
             fix = self.__fixHeadLongShort
@@ -468,6 +626,23 @@ class ToonHead(Actor.Actor):
             filePrefix = HeadDict['p']
             fix = self.__fixHeadLongLong
             headHeight = 0.75
+        elif headStyle == 'plsr':
+            filePrefix = HeadDictTTO['p']
+            fix = self.__fixHeadLongShort
+            headHeight = 0.75
+        elif headStyle == 'pssr':
+            filePrefix = HeadDictTTO['p']
+            fix = self.__fixHeadShortShort
+            headHeight = 0.5
+        elif headStyle == 'pslr':
+            filePrefix = HeadDictTTO['p']
+            fix = self.__fixHeadShortLong
+            headHeight = 0.5
+        elif headStyle == 'pllr':
+            filePrefix = HeadDictTTO['p']
+            fix = self.__fixHeadLongLong
+            headHeight = 0.75
+            
         elif headStyle == 'bls':
             filePrefix = HeadDict['b']
             fix = self.__fixHeadLongShort
@@ -484,6 +659,23 @@ class ToonHead(Actor.Actor):
             filePrefix = HeadDict['b']
             fix = self.__fixHeadLongLong
             headHeight = 0.75
+        elif headStyle == 'blsr':
+            filePrefix = HeadDictTTO['b']
+            fix = self.__fixHeadLongShort
+            headHeight = 0.75
+        elif headStyle == 'bssr':
+            filePrefix = HeadDictTTO['b']
+            fix = self.__fixHeadShortShort
+            headHeight = 0.5
+        elif headStyle == 'bslr':
+            filePrefix = HeadDictTTO['b']
+            fix = self.__fixHeadShortLong
+            headHeight = 0.5
+        elif headStyle == 'bllr':
+            filePrefix = HeadDictTTO['b']
+            fix = self.__fixHeadLongLong
+            headHeight = 0.75
+            
         elif headStyle == 'sls':
             filePrefix = HeadDict['s']
             fix = self.__fixHeadLongShort
@@ -500,6 +692,23 @@ class ToonHead(Actor.Actor):
             filePrefix = HeadDict['s']
             fix = self.__fixHeadLongLong
             headHeight = 0.75
+        elif headStyle == 'slsr':
+            filePrefix = HeadDictTTO['s']
+            fix = self.__fixHeadLongShort
+            headHeight = 0.75
+        elif headStyle == 'sssr':
+            filePrefix = HeadDictTTO['s']
+            fix = self.__fixHeadShortShort
+            headHeight = 0.5
+        elif headStyle == 'sslr':
+            filePrefix = HeadDictTTO['s']
+            fix = self.__fixHeadShortLong
+            headHeight = 0.5
+        elif headStyle == 'sllr':
+            filePrefix = HeadDictTTO['s']
+            fix = self.__fixHeadLongLong
+            headHeight = 0.75
+            
         # DEER
         elif (headStyle == 'xls'):
             # deer, long head, short muzzle
@@ -746,7 +955,10 @@ class ToonHead(Actor.Actor):
             ToonHead.notify.error('unknown head style: %s' % headStyle)
         if len(lods) == 1:
             filepath = 'phase_3' + filePrefix + lods[0]
-            self.loadModel(PreloadHeads[filepath], 'head', 'lodRoot', copy = True)
+            try:
+                self.loadModel(PreloadHeads[filepath], 'head', 'lodRoot', copy = True)
+            except:
+                pass
             if not forGui:
                 pLoaded = self.loadPumpkin(headStyle[1], None, copy)
                 self.loadSnowMan(headStyle[1], None, copy)
@@ -765,7 +977,10 @@ class ToonHead(Actor.Actor):
         else:
             for lod in lods:
                 filepath = 'phase_3' + filePrefix + lod
-                self.loadModel(PreloadHeads[filepath], 'head', lod, True)
+                if style.head.endswith('r'):
+                    self.loadModel(PreloadHeadsTTO[filepath], 'head', lod, True)
+                else:
+                    self.loadModel(PreloadHeads[filepath], 'head', lod, True)
                 if not forGui:
                     pLoaded = self.loadPumpkin(headStyle[1], lod, copy)
                     self.loadSnowMan(headStyle[1], lod, copy)
@@ -783,6 +998,7 @@ class ToonHead(Actor.Actor):
                         self.__copy = copy
 
         self.__fixEyes(style, forGui)
+        print(style)
         self.setupEyelashes(style)
         self.eyelids.request('closed')
         self.eyelids.request('open')
@@ -960,7 +1176,9 @@ class ToonHead(Actor.Actor):
             parts = self.findAllMatches('**/ear?-*')
             parts.setColor(style.getHeadColor())
             dogears = self.findAllMatches('**/ear*')
-            if not base.config.GetBool('want-legacy-heads', 1):
+            #if not base.config.GetBool('want-legacy-heads', 1):
+                #dogears.setColor(style.getHeadColor())
+            if not style.head.endswith('r'):
                 dogears.setColor(style.getHeadColor())
 
     def __fixEyes(self, style, forGui = 0):
@@ -1153,7 +1371,12 @@ class ToonHead(Actor.Actor):
             if self.__eyelashClosed:
                 self.__eyelashClosed.removeNode()
             animal = style.head[0]
-            model = loader.loadModel('phase_3' + EyelashDict[animal])
+            if style.head.endswith('r'):
+                model = loader.loadModel('phase_3' + EyelashDictTTO[animal])
+                print("AY CAN YOU SEE ME")
+            else:
+                model = loader.loadModel('phase_3' + EyelashDict[animal])
+                print("AY CAN YOU SEE ME PART 2")
             if self.hasLOD():
                 head = self.getPart('head', '1000')
             else:
@@ -1635,7 +1858,10 @@ class ToonHead(Actor.Actor):
                 else:
                     muzzle = self.find('**/' + lodName + '/**/muzzle*')
                     if lodName == '1000' or lodName == '500':
-                        filePrefix = DogMuzzleDict[style.head]
+                        if style.head.endswith('r'):
+                            filePrefix = DogMuzzleDictTTO[style.head]
+                        else:
+                            filePrefix = DogMuzzleDict[style.head]
                         muzzles = loader.loadModel('phase_3' + filePrefix + lodName)
                         if base.config.GetBool('want-new-anims', 1):
                             if not self.find('**/' + lodName + '/**/__Actor_head/def_head').isEmpty():
@@ -1661,7 +1887,10 @@ class ToonHead(Actor.Actor):
                 muzzle = self.find('**/muzzle*neutral')
             else:
                 muzzle = self.find('**/muzzle*')
-                filePrefix = DogMuzzleDict[style.head]
+                if style.head.endswith('r'):
+                    filePrefix = DogMuzzleDictTTO[style.head]
+                else:
+                    filePrefix = DogMuzzleDict[style.head]
                 muzzles = loader.loadModel('phase_3' + filePrefix + '1000')
                 if base.config.GetBool('want-new-anims', 1):
                     if not self.find('**/def_head').isEmpty():
