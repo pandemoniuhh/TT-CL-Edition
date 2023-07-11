@@ -30,7 +30,7 @@ toonSpeciesTypes = ['d',    # Dog
 toonHeadTypes = [ "dls", "dss", "dsl", "dll", "dlsr", "dssr", "dslr", "dllr", # Dog
                   "cls", "css", "csl", "cll", "clsr", "cssr", "cslr", "cllr", # Cat
                   "hls", "hss", "hsl", "hll", "hlsr", "hssr", "hslr", "hllr", # Horse
-                  "mls", "mss", "msl", "mll", "mlsr", "mssr", "mslr", "mllr", # Mouse
+                  "mls", "mss", "msl", "mll", "mlsr", "mssr",                 # Mouse
                   "rls", "rss", "rsl", "rll", "rlsr", "rssr", "rslr", "rllr", # Rabbit
                   "fls", "fss", "fsl", "fll", "flsr", "fssr", "fslr", "fllr", # Duck (Fowl)
                   "pls", "pss", "psl", "pll", "plsr", "pssr", "pslr", "pllr", # Monkey (Primate)
@@ -109,22 +109,22 @@ toonHeadAnimalIndices = [ 0, # start of dog heads
                           8, # start of cat heads
                           16, # start of horse heads
                           24, # start of mouse heads
-                          32, # start of rabbit heads
-                          40, # start of duck heads
-                          48, # start of monkey heads
-                          56, # start of bear heads
-                          64, # start of pig heads
-                          72, # start of deer heads
-                          76, # start of beaver heads
-                          80, # start of alligator heads
-                          84, # start of fox heads
-                          88, # start of bat heads
-                          92, # start of raccoon heads
-                          96, # start of turkey heads
-                          100, # start of koala heads
-                          104, # start of kangaroo heads
-                          108, # start of kiwi heads
-                          112, # start of armadillo heads
+                          30, # start of rabbit heads
+                          38, # start of duck heads
+                          46, # start of monkey heads
+                          54, # start of bear heads
+                          62, # start of pig heads
+                          70, # start of deer heads
+                          74, # start of beaver heads
+                          78, # start of alligator heads
+                          82, # start of fox heads
+                          86, # start of bat heads
+                          90, # start of raccoon heads
+                          94, # start of turkey heads
+                          98, # start of koala heads
+                          102, # start of kangaroo heads
+                          106, # start of kiwi heads
+                          110, # start of armadillo heads
                           ]
 toonHeadAnimalIndicesTrial = [0,
  4,
@@ -135,23 +135,23 @@ toonHeadAnimalIndicesTrial = [0,
 allToonHeadAnimalIndices = [ 0, 1, 2, 3, 4, 5, 6, 7,            # Dog
                              8, 9, 10, 11, 12, 13, 14, 15,      # Cat
                              16, 17, 18, 19, 20, 21, 22, 23,    # Horse
-                             24, 25, 26, 27, 28, 29, 30, 31,    # Mouse
-                             32, 33, 34, 35, 36, 37, 38, 39,    # Rabbit
-                             40, 41, 42, 43, 44, 45, 46, 47,    # Duck
-                             48, 49, 50, 51, 52, 53, 54, 55,    # Monkey
-                             56, 57, 58, 59, 60, 61, 62, 63,    # Bear
-                             64, 65, 66, 67, 68, 69, 70, 71,    # Pig
-                             72, 73, 74, 75,        # Deer
-                             76, 77, 78, 79,        # Beaver 
-                             80, 81, 82, 83,        # Alligator
-                             84, 85, 86, 87,        # Fox
-                             88, 89, 90, 91,        # Bat 
-                             92, 93, 94, 95,        # Raccoon 
-                             96, 97, 98, 99,        # Turkey
-                             100, 101, 102, 103,    # Koala
-                             104, 105, 106, 107,    # Kangaroo
-                             108, 109, 110, 111,     # Kiwi
-                             112, 113, 114, 115,     # Armadillo
+                             24, 25, 26, 27, 28, 29,            # Mouse
+                             30, 31, 32, 33, 34, 35, 36, 37,    # Rabbit
+                             38, 39, 40, 41, 42, 43, 44, 56,    # Duck
+                             46, 47, 48, 49, 50, 51, 52, 53,    # Monkey
+                             54, 55, 56, 57, 58, 59, 60, 61,    # Bear
+                             62, 63, 64, 65, 66, 67, 68, 69,    # Pig
+                             70, 71, 72, 73,        # Deer
+                             74, 75, 76, 77,        # Beaver
+                             78, 79, 80, 81,        # Alligator
+                             82, 83, 84, 85,        # Fox
+                             86, 87, 88, 89,        # Bat
+                             90, 91, 92, 93,        # Raccoon
+                             94, 95, 96, 97,        # Turkey
+                             98, 99, 100, 101,    # Koala
+                             102, 103, 104, 105,    # Kangaroo
+                             106, 107, 108, 109,     # Kiwi
+                             110, 111, 112, 113,     # Armadillo
                              ]
 toonTorsoTypes = ['ss',
  'ms',
@@ -2825,6 +2825,14 @@ class ToonDNA(AvatarDNA.AvatarDNA):
             return 'short'
         else:
             notify.error('unknown muzzle size: ', self.head[2])
+
+    def getHeadType(self):
+        if self.head[3] == '':
+            return 'clash'
+        elif self.head[3] == 'r':
+            return 'tto'
+        else:
+            notify.error('unknown head type: ', self.head[3])
 
     def getTorsoSize(self):
         if self.torso[0] == 'l':

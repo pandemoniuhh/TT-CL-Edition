@@ -46,59 +46,58 @@ if not base.config.GetBool('want-new-anims', 1):
      'k': '/models/char/kiwi-heads-',
      'l': '/models/char/armadillo-heads'
     }
-
-elif base.config.GetBool('want-legacy-heads', 1):
-    HeadDict = {'dls': '/models/char/legacy/tt_a_chr_dgm_shorts_head_',
-                'dss': '/models/char/legacy/tt_a_chr_dgm_skirt_head_',
-                'dsl': '/models/char/legacy/tt_a_chr_dgs_shorts_head_',
-                'dll': '/models/char/legacy/tt_a_chr_dgl_shorts_head_',
-                'c': '/models/char/legacy/cat-heads-',
-                'h': '/models/char/legacy/horse-heads-',
-                'm': '/models/char/legacy/mouse-heads-',
-                'r': '/models/char/legacy/rabbit-heads-',
-                'f': '/models/char/legacy/duck-heads-',
-                'p': '/models/char/legacy/monkey-heads-',
-                'b': '/models/char/legacy/bear-heads-',
-                's': '/models/char/legacy/pig-heads-',
-                'x': '/models/char/deer-heads-',
-                'z': '/models/char/beaver-heads-',
-                'a': '/models/char/alligator-heads-',
-                'v': '/models/char/fox-heads-',
-                'n': '/models/char/bat-heads-',
-                't': '/models/char/raccoon-heads-',
-                'g': '/models/char/turkey-heads-',
-                'e': '/models/char/koala-heads-',
-                'j': '/models/char/kangaroo-heads-',
-                'k': '/models/char/kiwi-heads-',
-                'l': '/models/char/armadillo-heads-'
-                }
-    EyelashDict = {'d': '/models/char/legacy/dog-lashes',
-                   'c': '/models/char/legacy/cat-lashes',
-                   'h': '/models/char/legacy/horse-lashes',
-                   'm': '/models/char/legacy/mouse-lashes',
-                   'r': '/models/char/legacy/rabbit-lashes',
-                   'f': '/models/char/legacy/duck-lashes',
-                   'p': '/models/char/legacy/monkey-lashes',
-                   'b': '/models/char/legacy/bear-lashes',
-                   's': '/models/char/legacy/pig-lashes',
-                   'x': '/models/char/deer-lashes',
-                   'z': '/models/char/beaver-lashes',
-                   'a': '/models/char/alligator-lashes',
-                   'v': '/models/char/fox-lashes',
-                   'n': '/models/char/bat-lashes',
-                   't': '/models/char/raccoon-lashes',
-                   'g': '/models/char/turkey-lashes',
-                   'e': '/models/char/koala-lashes',
-                   'j': '/models/char/kangaroo-lashes',
-                   'k': '/models/char/kiwi-lashes',
-                   'l': '/models/char/armadillo-lashes'
-                   }
+#
+#elif base.config.GetBool('want-legacy-heads', 1):
+#    HeadDict = {'dls': '/models/char/legacy/tt_a_chr_dgm_shorts_head_',
+#                'dss': '/models/char/legacy/tt_a_chr_dgm_skirt_head_',
+#                'dsl': '/models/char/legacy/tt_a_chr_dgs_shorts_head_',
+#                'dll': '/models/char/legacy/tt_a_chr_dgl_shorts_head_',
+#                'c': '/models/char/legacy/cat-heads-',
+#                'h': '/models/char/legacy/horse-heads-',
+#                'm': '/models/char/legacy/mouse-heads-',
+#                'r': '/models/char/legacy/rabbit-heads-',
+#                'f': '/models/char/legacy/duck-heads-',
+#                'p': '/models/char/legacy/monkey-heads-',
+#                'b': '/models/char/legacy/bear-heads-',
+#                's': '/models/char/legacy/pig-heads-',
+#                'x': '/models/char/deer-heads-',
+#                'z': '/models/char/beaver-heads-',
+#                'a': '/models/char/alligator-heads-',
+#                'v': '/models/char/fox-heads-',
+#                'n': '/models/char/bat-heads-',
+#                't': '/models/char/raccoon-heads-',
+#                'g': '/models/char/turkey-heads-',
+#                'e': '/models/char/koala-heads-',
+#                'j': '/models/char/kangaroo-heads-',
+#                'k': '/models/char/kiwi-heads-',
+#                'l': '/models/char/armadillo-heads-'
+#                }
+#    EyelashDict = {'d': '/models/char/legacy/dog-lashes',
+#                   'c': '/models/char/legacy/cat-lashes',
+#                   'h': '/models/char/legacy/horse-lashes',
+#                   'm': '/models/char/legacy/mouse-lashes',
+#                   'r': '/models/char/legacy/rabbit-lashes',
+#                   'f': '/models/char/legacy/duck-lashes',
+#                   'p': '/models/char/legacy/monkey-lashes',
+#                   'b': '/models/char/legacy/bear-lashes',
+#                   's': '/models/char/legacy/pig-lashes',
+#                   'x': '/models/char/deer-lashes',
+#                   'z': '/models/char/beaver-lashes',
+#                   'a': '/models/char/alligator-lashes',
+#                   'v': '/models/char/fox-lashes',
+#                   'n': '/models/char/bat-lashes',
+#                   't': '/models/char/raccoon-lashes',
+#                   'g': '/models/char/turkey-lashes',
+#                   'e': '/models/char/koala-lashes',
+#                   'j': '/models/char/kangaroo-lashes',
+#                   'k': '/models/char/kiwi-lashes',
+#                   'l': '/models/char/armadillo-lashes'
+#                   }
 
     DogMuzzleDict = {'dls': '/models/char/legacy/dogMM_Shorts-headMuzzles-',
                      'dss': '/models/char/legacy/dogMM_Skirt-headMuzzles-',
                      'dsl': '/models/char/legacy/dogSS_Shorts-headMuzzles-',
                      'dll': '/models/char/legacy/dogLL_Shorts-headMuzzles-'}
-
 
 else:
     HeadDict = {'dls': '/models/char/tt_a_chr_dgm_shorts_head_',
@@ -168,6 +167,19 @@ else:
      'p': '/models/char/legacy/monkey-lashes',
      'b': '/models/char/legacy/bear-lashes',
      's': '/models/char/legacy/pig-lashes',
+     # we may need the clash species lashes or else python will get pissed
+     # at us and raise a KeyError (JUST IN CASE)
+     'x': '/models/char/deer-lashes',
+     'z': '/models/char/beaver-lashes',
+     'a': '/models/char/alligator-lashes',
+     'v': '/models/char/fox-lashes',
+     'n': '/models/char/bat-lashes',
+     't': '/models/char/raccoon-lashes',
+     'g': '/models/char/turkey-lashes',
+     'e': '/models/char/koala-lashes',
+     'j': '/models/char/kangaroo-lashes',
+     'k': '/models/char/kiwi-lashes',
+     'l': '/models/char/armadillo-lashes'
     }      
     
 
@@ -507,17 +519,17 @@ class ToonHead(Actor.Actor):
             # mouse, short head, long muzzle
             filePrefix = HeadDict['m']
             fix = self.__fixHeadShortLong
-            if base.config.GetBool('want-legacy-heads', 1):
-                # TTO Mouse model fix
-                fix = self.__fixHeadShortShort
+            # if base.config.GetBool('want-legacy-heads', 1):
+            #    # TTO Mouse model fix
+            #    fix = self.__fixHeadShortShort
             headHeight = 0.75
         elif (headStyle == 'mll'):
             # mouse, long head, long muzzle
             filePrefix = HeadDict['m']
             fix = self.__fixHeadLongLong
-            if base.config.GetBool('want-legacy-heads', 1):
-                # TTO Mouse model fix
-                fix = self.__fixHeadLongShort
+            # if base.config.GetBool('want-legacy-heads', 1):
+            #    # TTO Mouse model fix
+            #    fix = self.__fixHeadLongShort
             headHeight = 0.5
         elif headStyle == 'mlsr':
             filePrefix = HeadDictTTO['m']
@@ -530,18 +542,18 @@ class ToonHead(Actor.Actor):
         elif (headStyle == 'mslr'):
             # mouse, short head, long muzzle
             filePrefix = HeadDictTTO['m']
-            fix = self.__fixHeadShortLong
-            if base.config.GetBool('want-legacy-heads', 1):
-                # TTO Mouse model fix
-                fix = self.__fixHeadShortShort
+            fix = self.__fixHeadShortShort
+            # if base.config.GetBool('want-legacy-heads', 1):
+            #    # TTO Mouse model fix
+            #    fix = self.__fixHeadShortShort
             headHeight = 0.75
         elif (headStyle == 'mllr'):
             # mouse, long head, long muzzle
             filePrefix = HeadDictTTO['m']
-            fix = self.__fixHeadLongLong
-            if base.config.GetBool('want-legacy-heads', 1):
-                # TTO Mouse model fix
-                fix = self.__fixHeadLongShort
+            fix = self.__fixHeadLongShort
+            # if base.config.GetBool('want-legacy-heads', 1):
+            #    # TTO Mouse model fix
+            #    fix = self.__fixHeadLongShort
             headHeight = 0.5
             
         elif headStyle == 'rls':
@@ -1424,17 +1436,11 @@ class ToonHead(Actor.Actor):
                 searchRoot.find('**/ears-short').removeNode()
             else:
                 searchRoot.find('**/ears-short').hide()
-        # Clash's rabbit model has 2 different eye nodes, TTO's has one
-        if base.config.GetBool('want-legacy-heads', 1):
-            if animalType != 'rabbit':
-                if copy:
-                    searchRoot.find('**/eyes-short').removeNode()
-                else:
-                    searchRoot.find('**/eyes-short').hide()
-        elif copy:
-            searchRoot.find('**/eyes-short').removeNode()
-        else:
-            searchRoot.find('**/eyes-short').hide()
+        if headStyle != "rlsr" and headStyle != "rssr" and headStyle != "rslr" and headStyle != "rllr":
+            if copy:
+                searchRoot.find('**/eyes-short').removeNode()
+            else:
+                searchRoot.find('**/eyes-short').hide()
         if animalType != 'dog':
             if copy:
                 searchRoot.find('**/joint_pupilL_short').removeNode()
@@ -1483,17 +1489,11 @@ class ToonHead(Actor.Actor):
                 searchRoot.find('**/ears-long').removeNode()
             else:
                 searchRoot.find('**/ears-long').hide()
-        # Clash's rabbit model has 2 different eye nodes, TTO's has one
-        if base.config.GetBool('want-legacy-heads', 1):
-            if animalType != 'rabbit':
-                if copy:
-                    searchRoot.find('**/eyes-long').removeNode()
-                else:
-                    searchRoot.find('**/eyes-long').hide()
-        elif copy:
-            searchRoot.find('**/eyes-long').removeNode()
-        else:
-            searchRoot.find('**/eyes-long').hide()
+        if headStyle != "rlsr" and headStyle != "rssr" and headStyle != "rslr" and headStyle != "rllr":
+            if copy:
+                searchRoot.find('**/eyes-long').removeNode()
+            else:
+                searchRoot.find('**/eyes-long').hide()
         if animalType != 'dog':
             if copy:
                 searchRoot.find('**/joint_pupilL_long').removeNode()
