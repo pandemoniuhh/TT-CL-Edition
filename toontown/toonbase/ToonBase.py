@@ -456,6 +456,7 @@ class ToonBase(OTPBase.OTPBase):
             musicVol = self.settings.getFloat('game', 'music-volume', 1.0)
             sfxVol = self.settings.getFloat('game', 'sfx-volume', 1.0)
             res = self.settings.getList('game', 'resolution', [800, 600])
+            toggleFpsMeter = self.settings.getBool('game', 'want-fps-meter', False)
             antialias = self.settings.getInt('game', 'antialiasing', 0)
             if antialias:
                 loadPrcFileData('toonBase Settings Framebuffer MSAA', 'framebuffer-multisample 1')
@@ -472,6 +473,7 @@ class ToonBase(OTPBase.OTPBase):
             loadPrcFileData('toonBase Settings Toon Chat Sounds', 'toon-chat-sounds %s' % toonChatSounds)
             loadPrcFileData('toonBase Settings Custom Keybinds', 'customKeybinds %s' % wantCustomKeybinds)
             loadPrcFileData('toonBase Settings Keymap', 'keymap %s' % keymap)
+            loadPrcFileData('toonBase Settings FPS Meter', 'show-frame-rate-meter %s' % toggleFpsMeter)
             self.settings.loadFromSettings()
 
     def reloadControls(self):

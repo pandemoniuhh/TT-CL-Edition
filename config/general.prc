@@ -3,7 +3,6 @@
 
 # Window settings
 win-origin -2 -2
-show-frame-rate-meter #t
 frame-rate-meter-text-pattern %0.f FPS
 frame-rate-meter-update-interval 0.001
 screenshot-extension png
