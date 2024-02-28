@@ -70,6 +70,8 @@ class ToonBase(OTPBase.OTPBase):
             self.notify.debug('Enabling particles')
             self.enableParticles()
         self.accept(ToontownGlobals.ScreenshotHotkey, self.takeScreenShot)
+        self.accept('f3', self.toggleGui)
+        self.accept('f4', self.toggleNameTags)
         self.accept('panda3d-render-error', self.panda3dRenderError)
         oldLoader = self.loader
         self.loader = ToontownLoader.ToontownLoader(self)
@@ -241,6 +243,36 @@ class ToonBase(OTPBase.OTPBase):
 
     def __walking(self, pressed):
         self.walking = pressed
+        
+    def toggleNameTags(self):
+        nametags3d = render.findAllMatches('**/nametag3d')
+        nametags2d = render2d.findAllMatches('**/Nametag2d')
+        hide = False
+        # Check if anything we're supposed to hide is visible
+        for nametag in nametags2d:
+            if not nametag.isHidden():
+                hide = True
+        for nametag in nametags3d:
+            if not nametag.isHidden():
+                hide = True
+
+        # If anything is visible, hide, else we will show everything
+        for nametag in nametags3d:
+            if hide:
+                nametag.hide()
+            else:
+                nametag.show()
+        for nametag in nametags2d:
+            if hide:
+                nametag.hide()
+            else:
+                nametag.show()
+
+    def toggleGui(self):
+        if aspect2d.isHidden():
+            aspect2d.show()
+        else:
+            aspect2d.hide()
 
     def takeScreenShot(self):
         if not os.path.exists('screenshots/'):
@@ -464,6 +496,15 @@ class ToonBase(OTPBase.OTPBase):
             else:
                 self.settings.updateSetting('game', 'antialiasing', antialias)
                 loadPrcFileData('toonBase Settings Framebuffer MSAA', 'framebuffer-multisample 0')
+            
+            fpsLimit = self.settings.getInt('game', 'fps-limit', 0) # unlimited
+            globalClock = ClockObject.getGlobalClock()
+            if fpsLimit != 0:
+                globalClock.setMode(ClockObject.MLimited)
+                globalClock.setFrameRate(fpsLimit)
+            else:
+                globalClock.setMode(ClockObject.MNormal)            
+                
             loadPrcFileData('toonBase Settings Window Res', 'win-size %s %s' % (res[0], res[1]))
             loadPrcFileData('toonBase Settings Window FullScreen', 'fullscreen %s' % fullscreen)
             loadPrcFileData('toonBase Settings Music Active', 'audio-music-active %s' % music)
